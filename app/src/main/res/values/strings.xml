@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">uang converter</string>
+    <string name="amount">masukan jumlah Uang</string>
+    <string name="from">dari</string>
+    <string name="to">ke</string>
+    <string name="from_input">masukan jumlah Asal</string>
+    <string name="to_input">masukan jumlah tujuan</string>
+    <string name="convert">ubah</string>
+    <string name="result">hasil convert</string>
+    <string name="input_invalid">tidak boleh kosong!</string>
 </resources>
