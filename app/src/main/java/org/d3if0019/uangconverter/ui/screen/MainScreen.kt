@@ -1,6 +1,7 @@
 package org.d3if0019.uangconverter.ui.screen
 
 import android.content.res.Configuration
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -8,7 +9,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -36,7 +39,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -136,15 +142,20 @@ fun ScreenContent(modifier: Modifier) {
                 ) {
                     mataUang.forEach{ uang ->
                         DropdownMenuItem(
-                            text = {
-                                Text(text = uang.kode)
-                                   },
+                            leadingIcon = {
+                                Image(painter = painterResource(id = uang.imageResId),
+                                    contentDescription = stringResource(R.string.gambar, uang.nama),
+                                    contentScale = ContentScale.Crop,
+                                    modifier = Modifier.size(24.dp).clip(CircleShape)
+                                )
+                            },
+                            text = { Text(text = uang.kode) },
                             onClick = {
                                 keyboardController?.hide()
                                 asalInput = uang.nama
                                 asal = uang
                                 expanded = false
-                            }
+                            },
                         )
                     }
                 }
@@ -180,15 +191,20 @@ fun ScreenContent(modifier: Modifier) {
                     }) {
                     mataUang.forEach{ uang ->
                         DropdownMenuItem(
-                            text = {
-                                Text(text = uang.kode)
+                            leadingIcon = {
+                                Image(painter = painterResource(id = uang.imageResId),
+                                    contentDescription = stringResource(R.string.gambar, uang.nama),
+                                    contentScale = ContentScale.Crop,
+                                    modifier = Modifier.size(24.dp).clip(CircleShape)
+                                )
                             },
+                            text = { Text(text = uang.kode) },
                             onClick = {
                                 keyboardController?.hide()
                                 tujuanInput = uang.nama
                                 tujuan = uang
-                                expanded2 = false
-                            }
+                                expanded = false
+                            },
                         )
                     }
                 }

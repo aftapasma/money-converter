@@ -5,6 +5,7 @@
     <string name="to">ke</string>
     <string name="from_input">masukan jumlah Asal</string>
     <string name="to_input">masukan jumlah tujuan</string>
+    <string name="gambar">Gambar %1$s</string>
     <string name="convert">ubah</string>
     <string name="result">hasil convert : %.2f</string>
     <string name="input_invalid">tidak boleh kosong!</string>
