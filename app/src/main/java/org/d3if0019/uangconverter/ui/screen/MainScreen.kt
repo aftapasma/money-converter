@@ -29,6 +29,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -42,6 +43,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.d3if0019.uangconverter.R
+import org.d3if0019.uangconverter.model.Uang
 import org.d3if0019.uangconverter.model.mataUang
 import org.d3if0019.uangconverter.ui.theme.UangConverterTheme
 
@@ -80,7 +82,7 @@ fun ScreenContent(modifier: Modifier) {
 
     var tujuan by remember { mutableStateOf(mataUang[1]) }
     var tujuanInput by remember { mutableStateOf("") }
-    var hasil by remember { mutableStateOf("") }
+    var hasil by remember { mutableDoubleStateOf(0.0) }
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -194,14 +196,15 @@ fun ScreenContent(modifier: Modifier) {
         }
         Button(onClick = {
             jumlahError = (jumlah == "" || jumlah == "0")
-            jumlahError = (jumlah == "" || jumlah == "0")
             if (jumlahError) return@Button
+            hasil = convertUang(jumlah.toDouble(),asal, tujuan)
         },
             modifier = Modifier.padding(top = 16.dp),
             contentPadding = PaddingValues(horizontal=32.dp, vertical=16.dp)
         ) {
             Text(text = stringResource(R.string.convert))
         }
+        if (hasil != 0.0) {
         Divider(
             modifier = Modifier.padding(vertical = 8.dp),
             thickness = 1.dp
@@ -210,7 +213,10 @@ fun ScreenContent(modifier: Modifier) {
             text = stringResource(id = R.string.result, hasil),
             style = MaterialTheme.typography.titleLarge
         )
+
+        }
     }
+    
 }
 
 @Composable
@@ -228,6 +234,12 @@ fun ErrorHint(isError: Boolean) {
     }
 }
 
+fun convertUang(jumlah: Double, asal: Uang, tujuan: Uang): Double {
+    val nilaiAsal = asal.nilai
+    val nilaiTujuan = tujuan.nilai
+
+    return jumlah / nilaiAsal * nilaiTujuan
+}
 
 @Preview(showBackground = true)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
