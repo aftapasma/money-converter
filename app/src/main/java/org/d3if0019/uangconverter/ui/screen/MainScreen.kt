@@ -1,5 +1,7 @@
 package org.d3if0019.uangconverter.ui.screen
 
+import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -41,6 +43,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -89,6 +92,7 @@ fun ScreenContent(modifier: Modifier) {
     var tujuan by remember { mutableStateOf(mataUang[1]) }
     var tujuanInput by remember { mutableStateOf("") }
     var hasil by remember { mutableDoubleStateOf(0.0) }
+    val context = LocalContext.current
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -124,7 +128,7 @@ fun ScreenContent(modifier: Modifier) {
             ) {
                 TextField(
                     value = asalInput,
-                    onValueChange = {},
+                    onValueChange = {asalInput = it },
                     readOnly = true,
                     singleLine = true,
                     trailingIcon = {
@@ -146,7 +150,9 @@ fun ScreenContent(modifier: Modifier) {
                                 Image(painter = painterResource(id = uang.imageResId),
                                     contentDescription = stringResource(R.string.gambar, uang.nama),
                                     contentScale = ContentScale.Crop,
-                                    modifier = Modifier.size(24.dp).clip(CircleShape)
+                                    modifier = Modifier
+                                        .size(24.dp)
+                                        .clip(CircleShape)
                                 )
                             },
                             text = { Text(text = uang.kode) },
@@ -171,7 +177,7 @@ fun ScreenContent(modifier: Modifier) {
             }) {
                 TextField(
                     value = tujuanInput,
-                    onValueChange = {},
+                    onValueChange = {tujuanInput = it },
                     readOnly = true,
                     trailingIcon = {
                         ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded2)
@@ -195,7 +201,9 @@ fun ScreenContent(modifier: Modifier) {
                                 Image(painter = painterResource(id = uang.imageResId),
                                     contentDescription = stringResource(R.string.gambar, uang.nama),
                                     contentScale = ContentScale.Crop,
-                                    modifier = Modifier.size(24.dp).clip(CircleShape)
+                                    modifier = Modifier
+                                        .size(24.dp)
+                                        .clip(CircleShape)
                                 )
                             },
                             text = { Text(text = uang.kode) },
@@ -229,7 +237,20 @@ fun ScreenContent(modifier: Modifier) {
             text = stringResource(id = R.string.result, hasil),
             style = MaterialTheme.typography.titleLarge
         )
-
+            Button(
+                onClick = {
+                          shareData(
+                              context = context,
+                              message = context.getString(R.string.bagikan_template,
+                                  jumlah,asalInput, tujuanInput, hasil
+                              )
+                          )
+                },
+                modifier = Modifier.padding(top = 8.dp),
+                contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
+            ) {
+                Text(text = stringResource(id = R.string.bagikan))
+            }
         }
     }
     
@@ -255,6 +276,16 @@ fun convertUang(jumlah: Double, asal: Uang, tujuan: Uang): Double {
     val nilaiTujuan = tujuan.nilai
 
     return jumlah / nilaiAsal * nilaiTujuan
+}
+
+private  fun shareData(context: Context, message: String) {
+    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, message)
+    }
+    if (shareIntent.resolveActivity(context.packageManager) != null) {
+        context.startActivity(shareIntent)
+    }
 }
 
 @Preview(showBackground = true)

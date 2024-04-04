@@ -8,5 +8,8 @@
     <string name="gambar">Gambar %1$s</string>
     <string name="convert">ubah</string>
     <string name="result">hasil convert : %.2f</string>
+    <string name="bagikan">bagikan</string>
+    <string name="bagikan_template">jumlah convert: %1$s \nDari: %2$s
+     \n Ke: %3$s \n\n Hasil Convert: %4$.2f</string>
     <string name="input_invalid">tidak boleh kosong!</string>
 </resources>
