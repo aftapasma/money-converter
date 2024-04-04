@@ -18,6 +18,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenuItem
@@ -25,6 +26,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -37,6 +39,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -51,14 +54,17 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import org.d3if0019.uangconverter.R
 import org.d3if0019.uangconverter.model.Uang
 import org.d3if0019.uangconverter.model.mataUang
+import org.d3if0019.uangconverter.navigation.Screen
 import org.d3if0019.uangconverter.ui.theme.UangConverterTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(navController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -67,8 +73,17 @@ fun MainScreen() {
                 },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.primary,
-                )
+                    titleContentColor = MaterialTheme.colorScheme.primary
+                ),
+                actions = {
+                    IconButton(onClick = {navController.navigate(Screen.About.route)}) {
+                        Icon(
+                            imageVector = Icons.Outlined.Info,
+                            contentDescription = stringResource(id = R.string.tentang_aplikasi),
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
             )
         }
     ) { padding ->
@@ -79,19 +94,21 @@ fun MainScreen() {
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun ScreenContent(modifier: Modifier) {
-    var jumlah by remember { mutableStateOf("") }
+    var jumlah by rememberSaveable { mutableStateOf("") }
     var jumlahError by remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
     var expanded2 by remember { mutableStateOf(false) }
 
     var asal by remember { mutableStateOf(mataUang[0]) }
-    var asalInput by remember { mutableStateOf("") }
+    var asalError by remember { mutableStateOf(false) }
+    var asalInput by rememberSaveable { mutableStateOf("") }
 
     val keyboardController = LocalSoftwareKeyboardController.current
 
     var tujuan by remember { mutableStateOf(mataUang[1]) }
-    var tujuanInput by remember { mutableStateOf("") }
-    var hasil by remember { mutableDoubleStateOf(0.0) }
+    var tujuanError by remember { mutableStateOf(false) }
+    var tujuanInput by rememberSaveable { mutableStateOf("") }
+    var hasil by rememberSaveable { mutableDoubleStateOf(0.0) }
     val context = LocalContext.current
     Column(
         modifier = modifier
@@ -123,8 +140,7 @@ fun ScreenContent(modifier: Modifier) {
             ExposedDropdownMenuBox(
                 expanded = expanded,
                 onExpandedChange ={ newValue ->
-                expanded = newValue }
-
+                expanded = newValue },
             ) {
                 TextField(
                     value = asalInput,
@@ -134,7 +150,13 @@ fun ScreenContent(modifier: Modifier) {
                     trailingIcon = {
                         ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                     placeholder = { Text(text = stringResource(id = R.string.from_input)) },
+                    isError = asalError,
+                    supportingText = { ErrorHint(asalError)},
                     colors = ExposedDropdownMenuDefaults.textFieldColors(),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Done
+                    ),
                     modifier = Modifier
                         .menuAnchor()
                         .fillMaxWidth()
@@ -172,20 +194,26 @@ fun ScreenContent(modifier: Modifier) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            ExposedDropdownMenuBox(expanded = expanded2, onExpandedChange ={ newValue ->
-                expanded2 = newValue
-            }) {
+            ExposedDropdownMenuBox(
+                expanded = expanded2,
+                onExpandedChange ={ newValue ->
+                    expanded2 = newValue },
+            ) {
                 TextField(
                     value = tujuanInput,
                     onValueChange = {tujuanInput = it },
                     readOnly = true,
+                    singleLine = true,
                     trailingIcon = {
-                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded2)
-                    },
-                    placeholder = {
-                        Text(text = stringResource(id = R.string.to_input))
-                    },
+                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded2) },
+                    placeholder = { Text(text = stringResource(id = R.string.to_input)) },
+                    isError = tujuanError,
+                    supportingText = { ErrorHint(tujuanError)},
                     colors = ExposedDropdownMenuDefaults.textFieldColors(),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Done
+                    ),
                     modifier = Modifier
                         .menuAnchor()
                         .fillMaxWidth()
@@ -193,8 +221,8 @@ fun ScreenContent(modifier: Modifier) {
                 )
                 ExposedDropdownMenu(
                     expanded = expanded2,
-                    onDismissRequest = { expanded2 = false
-                    }) {
+                    onDismissRequest = { expanded2 = false },
+                ) {
                     mataUang.forEach{ uang ->
                         DropdownMenuItem(
                             leadingIcon = {
@@ -211,7 +239,7 @@ fun ScreenContent(modifier: Modifier) {
                                 keyboardController?.hide()
                                 tujuanInput = uang.nama
                                 tujuan = uang
-                                expanded = false
+                                expanded2 = false
                             },
                         )
                     }
@@ -220,7 +248,9 @@ fun ScreenContent(modifier: Modifier) {
         }
         Button(onClick = {
             jumlahError = (jumlah == "" || jumlah == "0")
-            if (jumlahError) return@Button
+            asalError = (asalInput == "")
+            tujuanError = (tujuanInput == "")
+            if (jumlahError || asalError || tujuanError) return@Button
             hasil = convertUang(jumlah.toDouble(),asal, tujuan)
         },
             modifier = Modifier.padding(top = 16.dp),
@@ -293,6 +323,6 @@ private  fun shareData(context: Context, message: String) {
 @Composable
 fun ScreenPreview() {
     UangConverterTheme {
-        MainScreen()
+        MainScreen(rememberNavController())
     }
 }

@@ -12,4 +12,9 @@
     <string name="bagikan_template">jumlah convert: %1$s \nDari: %2$s
      \n Ke: %3$s \n\n Hasil Convert: %4$.2f</string>
     <string name="input_invalid">tidak boleh kosong!</string>
+    <string name="tentang_aplikasi">Tentang Aplikasi</string>
+    <string name="isian">Aplikasi ini merupakan sebuah aplikasi yang mengubah nilai mata uang ke negara tujuan yang ingin diubah, aplikasi ini meminta jumlah uang yang ingin diubah, setelah itu meminta dua inputan dropdown mata uang yang ingin diubah ke mata uang yang dituju.
+        Aplikasi ini tidak menggunakan API jadi nilai mata uang tidak dapat berubah mengikuti nilai yang asli dan juga hanya dapat mengubah dalam lima negara saja.
+    </string>
+    <string name="kembali">kembali</string>
 </resources>
