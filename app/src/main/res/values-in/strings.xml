@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Converter mata uang</string>
+    <string name="amount">Masukan jumlah uang</string>
+    <string name="from">Dari</string>
+    <string name="to">Ke</string>
+    <string name="from_input">Masukan mata uang asal</string>
+    <string name="to_input">Masukan mata uang tujuan</string>
+    <string name="pictures">Gambar %1$s</string>
+    <string name="convert">Ubah</string>
+    <string name="result">Hasil pengubahan : %.2f</string>
+    <string name="share">Bagikan</string>
+    <string name="share_template">Ubah Mata Uang\n\nJumlah Uang: %1$s \nDari Uang: %2$s
+     \n Ke : %3$s \n\n Menjadi: %4$.2f</string>
+    <string name="input_invalid">Tidak boleh kosong!</string>
+    <string name="about_app">Tentang Aplikasi</string>
+    <string name="about_fill">Aplikasi ini merupakan Aplikasi yang mengubah nilai mata uang
+        ke negara tujuan yang ingin diubah,
+        aplikasi ini meminta jumlah uang yang ingin diubah, setelah itu meminta dua inputan
+        dropdown mata uang yang ingin diubah ke mata uang yang dituju.
+        Aplikasi ini tidak menggunakan API jadi nilai mata uang tidak dapat berubah mengikuti nilai
+        yang asli dan juga hanya dapat mengubah dalam lima negara saja.
+    </string>
+    <string name="back">Kembali</string>
+</resources>

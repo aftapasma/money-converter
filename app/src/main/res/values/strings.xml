@@ -1,20 +1,21 @@
 <resources>
-    <string name="app_name">uang converter</string>
-    <string name="amount">masukan jumlah Uang</string>
-    <string name="from">dari</string>
-    <string name="to">ke</string>
-    <string name="from_input">masukan jumlah Asal</string>
-    <string name="to_input">masukan jumlah tujuan</string>
-    <string name="gambar">Gambar %1$s</string>
-    <string name="convert">ubah</string>
-    <string name="result">hasil convert : %.2f</string>
-    <string name="bagikan">bagikan</string>
-    <string name="bagikan_template">jumlah convert: %1$s \nDari: %2$s
-     \n Ke: %3$s \n\n Hasil Convert: %4$.2f</string>
-    <string name="input_invalid">tidak boleh kosong!</string>
-    <string name="tentang_aplikasi">Tentang Aplikasi</string>
-    <string name="isian">Aplikasi ini merupakan sebuah aplikasi yang mengubah nilai mata uang ke negara tujuan yang ingin diubah, aplikasi ini meminta jumlah uang yang ingin diubah, setelah itu meminta dua inputan dropdown mata uang yang ingin diubah ke mata uang yang dituju.
-        Aplikasi ini tidak menggunakan API jadi nilai mata uang tidak dapat berubah mengikuti nilai yang asli dan juga hanya dapat mengubah dalam lima negara saja.
+    <string name="app_name">Money Converter</string>
+    <string name="amount">Enter the amount of money</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="from_input">Enter the original amount</string>
+    <string name="to_input">Enter the destination amount</string>
+    <string name="pictures">Picture %1$s</string>
+    <string name="convert">Convert</string>
+    <string name="result">conversion results : %.2f</string>
+    <string name="share">Share</string>
+    <string name="share_template">Change currency\n\nOriginal amount: %1$s \nFrom: %2$s
+     \n To: %3$s \n\n Convert result: %4$.2f</string>
+    <string name="input_invalid">can not be empty!</string>
+    <string name="about_app">About Application</string>
+    <string name="about_fill">This application is an application that changes the currency value for the destination country you want to change, this application asks for the amount of money
+         that you want to change, after that it asks for two dropdown inputs for the currency you want to change to the desired currency.
+         This application does not use an API so currency values cannot change according to the original value and can only change in five countries.
     </string>
-    <string name="kembali">kembali</string>
+    <string name="back">Back</string>
 </resources>
