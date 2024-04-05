@@ -32,13 +32,13 @@ fun AboutScreen(navController: NavHostController) {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = stringResource(id = R.string.kembali),
+                            contentDescription = stringResource(id = R.string.back),
                             tint = MaterialTheme.colorScheme.primary
                         )
                     }
                 },
                 title = {
-                    Text(text = stringResource(id = R.string.tentang_aplikasi))
+                    Text(text = stringResource(id = R.string.about_app))
                 },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -48,7 +48,7 @@ fun AboutScreen(navController: NavHostController) {
         }
     ) { padding ->
         Text(
-            text = stringResource(id = R.string.isian),
+            text = stringResource(id = R.string.about_fill),
             modifier = Modifier
                 .padding(padding)
                 .padding(16.dp)

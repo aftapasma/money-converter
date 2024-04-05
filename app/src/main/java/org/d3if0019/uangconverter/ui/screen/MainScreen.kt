@@ -79,7 +79,7 @@ fun MainScreen(navController: NavHostController) {
                     IconButton(onClick = {navController.navigate(Screen.About.route)}) {
                         Icon(
                             imageVector = Icons.Outlined.Info,
-                            contentDescription = stringResource(id = R.string.tentang_aplikasi),
+                            contentDescription = stringResource(id = R.string.about_app),
                             tint = MaterialTheme.colorScheme.primary
                         )
                     }
@@ -170,7 +170,7 @@ fun ScreenContent(modifier: Modifier) {
                         DropdownMenuItem(
                             leadingIcon = {
                                 Image(painter = painterResource(id = uang.imageResId),
-                                    contentDescription = stringResource(R.string.gambar, uang.nama),
+                                    contentDescription = stringResource(R.string.pictures, uang.nama),
                                     contentScale = ContentScale.Crop,
                                     modifier = Modifier
                                         .size(24.dp)
@@ -227,7 +227,7 @@ fun ScreenContent(modifier: Modifier) {
                         DropdownMenuItem(
                             leadingIcon = {
                                 Image(painter = painterResource(id = uang.imageResId),
-                                    contentDescription = stringResource(R.string.gambar, uang.nama),
+                                    contentDescription = stringResource(R.string.pictures, uang.nama),
                                     contentScale = ContentScale.Crop,
                                     modifier = Modifier
                                         .size(24.dp)
@@ -271,7 +271,7 @@ fun ScreenContent(modifier: Modifier) {
                 onClick = {
                           shareData(
                               context = context,
-                              message = context.getString(R.string.bagikan_template,
+                              message = context.getString(R.string.share_template,
                                   jumlah,asalInput, tujuanInput, hasil
                               )
                           )
@@ -279,7 +279,7 @@ fun ScreenContent(modifier: Modifier) {
                 modifier = Modifier.padding(top = 8.dp),
                 contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
             ) {
-                Text(text = stringResource(id = R.string.bagikan))
+                Text(text = stringResource(id = R.string.share))
             }
         }
     }
